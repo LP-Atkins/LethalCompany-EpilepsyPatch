@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpilepsyPatch", "EpilepsyPatch\EpilepsyPatch.csproj", "{448AF8F1-1E7E-4222-9304-828F2DAEA2BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{448AF8F1-1E7E-4222-9304-828F2DAEA2BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{448AF8F1-1E7E-4222-9304-828F2DAEA2BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{448AF8F1-1E7E-4222-9304-828F2DAEA2BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{448AF8F1-1E7E-4222-9304-828F2DAEA2BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2CD9CCB5-C38A-41A9-98ED-63F821B33BA9}
+	EndGlobalSection
+EndGlobal
