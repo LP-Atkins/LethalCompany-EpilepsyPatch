@@ -14,11 +14,16 @@ namespace EpilepsyPatch.patches
     {
         [HarmonyPatch("Update")]
         [HarmonyPostfix]
-        static void adrenalineBoostPatch()
+        static void shipLightsPatch()
         {
             if (EpilepsyPatchBase.GettingFiredLightDisabled.Value)
             {
                 StartOfRound.Instance.shipAnimatorObject.gameObject.GetComponent<Animator>().SetBool("AlarmRinging", value: false);
+            }
+
+            if (EpilepsyPatchBase.ForceShipLightsOn.Value)
+            {
+                StartOfRound.Instance.shipRoomLights.gameObject.GetComponent<ShipLights>().areLightsOn = false;     //this doesn't set the state it just keeps track of it.
             }
         }
 

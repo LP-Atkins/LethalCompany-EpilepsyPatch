@@ -20,7 +20,7 @@ namespace EpilepsyPatch
     {
         private const string modGUID = "LongParsnip.EpilepsyPatch";
         private const string modName = "EpilepsyPatch";
-        private const string modVersion = "1.0.3.0";
+        private const string modVersion = "1.0.5.0";
         public const bool LogDebugMessages = false;                     //This is for helping with developing the transpiler code, to find the correct IL to modify.
 
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -36,6 +36,9 @@ namespace EpilepsyPatch
         public static string DisableGlobalNotificationsKey = "Disable global notifications";
         public static string DisableRadiationWarningKey = "Disable radiation warning";
         public static string ReplaceWarningWithHintKey = "Replace warning with hint";
+        public static string ForceShipLightsOnKey = "Force ship lights on";
+        public static string HideLightningStrikesKey = "Hide lightning strikes";
+        public static string HideLightningExplosionsKey = "Hide lightning explosions";
 
         //Config Entries.
         public static ConfigEntry<bool> StunGrenadeExplosionDisabled;
@@ -45,6 +48,9 @@ namespace EpilepsyPatch
         public static ConfigEntry<bool> DisableGlobalNotifications;
         public static ConfigEntry<bool> DisableRadiationWarning;
         public static ConfigEntry<bool> ReplaceWarningWithHint;
+        public static ConfigEntry<bool> ForceShipLightsOn;
+        public static ConfigEntry<bool> HideLightningStrikes;
+        public static ConfigEntry<bool> HideLightningExplosions;
 
         void Awake()
         {
@@ -57,6 +63,10 @@ namespace EpilepsyPatch
             DisableGlobalNotifications = (Config.Bind<bool>("General", DisableGlobalNotificationsKey, false, new ConfigDescription("Should global notifications be disabled")));
             DisableRadiationWarning = (Config.Bind<bool>("General", DisableRadiationWarningKey, true, new ConfigDescription("Should the radiation warning be disabled")));
             ReplaceWarningWithHint = (Config.Bind<bool>("General", ReplaceWarningWithHintKey, true, new ConfigDescription("Should warnings be replaced with hints")));
+            ForceShipLightsOn = (Config.Bind<bool>("General", ForceShipLightsOnKey, true, new ConfigDescription("Should ship lights always be forced to be on")));
+            HideLightningStrikes = (Config.Bind<bool>("General", HideLightningStrikesKey, true, new ConfigDescription("Should lightning strikes be hidden")));
+            HideLightningExplosions = (Config.Bind<bool>("General", HideLightningExplosionsKey, true, new ConfigDescription("Should explosions from lightning strikes be hidden")));
+
 
 
             if (Instance == null)
@@ -74,6 +84,9 @@ namespace EpilepsyPatch
             harmony.PatchAll(typeof(RadiationWarningHUD_Patch));
             harmony.PatchAll(typeof(DisplayTip_Patch));
             harmony.PatchAll(typeof(PlayerControllerBPatch));
+            //harmony.PatchAll(typeof(ShipTeleporterPatch));        //Example of how to use a transpiler on a coroutine.
+            harmony.PatchAll(typeof(LightningPatch));
+            //harmony.PatchAll(typeof(ExplosionPatch));     //didn't work for lightning, might be useful for landmines though, needs more testing.
         }
 
 
