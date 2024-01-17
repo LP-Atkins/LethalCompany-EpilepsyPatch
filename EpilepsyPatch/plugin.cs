@@ -39,6 +39,7 @@ namespace EpilepsyPatch
         public static string ForceShipLightsOnKey = "Force ship lights on";
         public static string HideLightningStrikesKey = "Hide lightning strikes";
         public static string HideLightningExplosionsKey = "Hide lightning explosions";
+        public static string DisableFearScreenFilterKey = "Disable fear screen filter";
 
         //Config Entries.
         public static ConfigEntry<bool> StunGrenadeExplosionDisabled;
@@ -51,6 +52,7 @@ namespace EpilepsyPatch
         public static ConfigEntry<bool> ForceShipLightsOn;
         public static ConfigEntry<bool> HideLightningStrikes;
         public static ConfigEntry<bool> HideLightningExplosions;
+        public static ConfigEntry<bool> DisableFearScreenFilter;
 
         void Awake()
         {
@@ -66,6 +68,7 @@ namespace EpilepsyPatch
             ForceShipLightsOn = (Config.Bind<bool>("General", ForceShipLightsOnKey, true, new ConfigDescription("Should ship lights always be forced to be on")));
             HideLightningStrikes = (Config.Bind<bool>("General", HideLightningStrikesKey, true, new ConfigDescription("Should lightning strikes be hidden")));
             HideLightningExplosions = (Config.Bind<bool>("General", HideLightningExplosionsKey, true, new ConfigDescription("Should explosions from lightning strikes be hidden")));
+            DisableFearScreenFilter = (Config.Bind<bool>("General", DisableFearScreenFilterKey, true, new ConfigDescription("Should the fear effect screen filter be hidden")));
 
 
 
@@ -87,6 +90,7 @@ namespace EpilepsyPatch
             //harmony.PatchAll(typeof(ShipTeleporterPatch));        //Example of how to use a transpiler on a coroutine.
             harmony.PatchAll(typeof(LightningPatch));
             //harmony.PatchAll(typeof(ExplosionPatch));     //didn't work for lightning, might be useful for landmines though, needs more testing.
+            harmony.PatchAll(typeof(insanityFilterPatch));
         }
 
 

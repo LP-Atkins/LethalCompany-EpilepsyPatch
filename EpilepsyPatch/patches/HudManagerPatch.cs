@@ -7,6 +7,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using GameNetcodeStuff;
+using UnityEngine;
+using System.Runtime.Remoting;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition;
 
 namespace EpilepsyPatch.patches
 {
@@ -140,6 +144,23 @@ namespace EpilepsyPatch.patches
             }
 
             return instructionList.AsEnumerable();
+        }
+
+    }
+
+
+    [HarmonyPatch(typeof(HUDManager))]
+    internal class insanityFilterPatch
+    {
+        [HarmonyPatch("Update")]
+        [HarmonyPrefix]
+        static void shipLightsPatch(ref Volume ___insanityScreenFilter)
+        {
+            if (EpilepsyPatchBase.DisableFearScreenFilter.Value)
+            {
+                ___insanityScreenFilter.weight = 0f;
+
+            }
         }
 
     }
