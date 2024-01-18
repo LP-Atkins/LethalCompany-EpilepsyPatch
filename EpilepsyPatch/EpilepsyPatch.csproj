@@ -79,11 +79,16 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company(SDK)\Lethal Company_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.VFXModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company(SDK)\Lethal Company_Data\Managed\UnityEngine.VFXModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="patches\HudManagerPatch.cs" />
     <Compile Include="patches\LandminePatch.cs" />
     <Compile Include="patches\PlayerControllerBPatch.cs" />
+    <Compile Include="patches\RedLocustBeesPatch.cs" />
     <Compile Include="patches\ShipTeleporterPatch.cs" />
     <Compile Include="patches\StormyWeatherPatch.cs" />
     <Compile Include="patches\StunGrenadeExplosionPatch.cs" />
