@@ -20,7 +20,7 @@ namespace EpilepsyPatch
     {
         private const string modGUID = "LongParsnip.EpilepsyPatch";
         private const string modName = "EpilepsyPatch";
-        private const string modVersion = "1.0.5.0";
+        private const string modVersion = "1.0.6.0";
         public const bool LogDebugMessages = false;                     //This is for helping with developing the transpiler code, to find the correct IL to modify.
 
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -41,6 +41,7 @@ namespace EpilepsyPatch
         public static string HideLightningExplosionsKey = "Hide lightning explosions";
         public static string DisableFearScreenFilterKey = "Disable fear screen filter";
         public static string DisableBeeZapsKey = "Disable bee zaps";
+        public static string DisableBeamUpParticlesKey = "Disable beam up particles";
 
         //Config Entries.
         public static ConfigEntry<bool> StunGrenadeExplosionDisabled;
@@ -55,6 +56,7 @@ namespace EpilepsyPatch
         public static ConfigEntry<bool> HideLightningExplosions;
         public static ConfigEntry<bool> DisableFearScreenFilter;
         public static ConfigEntry<bool> DisableBeeZaps;
+        public static ConfigEntry<bool> DisableBeamUpParticles;
 
         void Awake()
         {
@@ -72,6 +74,7 @@ namespace EpilepsyPatch
             HideLightningExplosions = (Config.Bind<bool>("General", HideLightningExplosionsKey, true, new ConfigDescription("Should explosions from lightning strikes be hidden")));
             DisableFearScreenFilter = (Config.Bind<bool>("General", DisableFearScreenFilterKey, false, new ConfigDescription("Should the fear effect screen filter be hidden")));
             DisableBeeZaps = (Config.Bind<bool>("General", DisableBeeZapsKey, true, new ConfigDescription("Should the bee zap effect be hidden")));
+            DisableBeamUpParticles = (Config.Bind<bool>("General", DisableBeamUpParticlesKey, true, new ConfigDescription("Should the particle effect when being beamed up be hidden")));
 
 
 

@@ -27,5 +27,17 @@ namespace EpilepsyPatch.patches
             }
         }
 
+        [HarmonyPatch("Update")]
+        [HarmonyPostfix]
+        static void TeleporterBeamUpPatch(ref PlayerControllerB __instance)
+        {
+            if (EpilepsyPatchBase.DisableBeamUpParticles.Value)
+            {
+                __instance.beamUpParticle.Stop();
+                __instance.beamOutParticle.Stop();
+                __instance.beamOutBuildupParticle.Stop();
+            }
+        }
+
     }
 }
