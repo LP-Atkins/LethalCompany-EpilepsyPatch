@@ -45,6 +45,8 @@ namespace EpilepsyPatch
         public static string PreventFlashlightSpamKey = "Prevent flashlight spam";
         public static string FlashlightSpamCooldownKey = "Flashlight spam cooldown";
 
+        public static string DisablePlayerMonitorBlinkKey = "Disable player monitor blink";
+
         //Config Entries.
         public static ConfigEntry<bool> StunGrenadeExplosionDisabled;
         public static ConfigEntry<bool> StunGrenadeFilterDisabled;
@@ -61,6 +63,7 @@ namespace EpilepsyPatch
         public static ConfigEntry<bool> DisableBeamUpParticles;
         public static ConfigEntry<bool> PreventFlashlightSpam;
         public static ConfigEntry<float> FlashlightSpamCooldown;
+        public static ConfigEntry<bool> DisablePlayerMonitorBlink;
 
         void Awake()
         {
@@ -81,7 +84,7 @@ namespace EpilepsyPatch
             DisableBeamUpParticles = (Config.Bind<bool>("General", DisableBeamUpParticlesKey, true, new ConfigDescription("Should the particle effect when being beamed up be hidden")));
             PreventFlashlightSpam = (Config.Bind<bool>("General", PreventFlashlightSpamKey, true, new ConfigDescription("Prevent the flashlight from being spammed on and off")));
             FlashlightSpamCooldown = Config.Bind("General", FlashlightSpamCooldownKey, 2.0f, new ConfigDescription("Time in seconds for network players flashlight to be on cooldown for, this is to prevent spamming. Note: this may cause the state to not be synchronised.", new AcceptableValueRange<float>(0.1f, 5.0f)));
-
+            DisablePlayerMonitorBlink = (Config.Bind<bool>("General", DisablePlayerMonitorBlinkKey, true, new ConfigDescription("Should the screen blink when switching players on the monitor animation be removed")));
 
 
             if (Instance == null)
@@ -108,6 +111,7 @@ namespace EpilepsyPatch
             //harmony.PatchAll(typeof(SwitchFlashlightPatch));      //Failed testing for preventing flashlight spam.
             //harmony.PatchAll(typeof(FlashlightSpamPatch));        //Failed testing for preventing flashlight spam.
             harmony.PatchAll(typeof(SwitchFlashlightSpamPatch));
+            harmony.PatchAll(typeof(ManualCameraRendererPatch));
         }
 
 
