@@ -10,6 +10,7 @@ using System.Reflection.Emit;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using EpilepsyPatch.tools;
 
 namespace EpilepsyPatch
 {
@@ -20,7 +21,7 @@ namespace EpilepsyPatch
     {
         private const string modGUID = "LongParsnip.EpilepsyPatch";
         private const string modName = "EpilepsyPatch";
-        private const string modVersion = "1.0.7.0";
+        private const string modVersion = "1.0.8.0";
         public const bool LogDebugMessages = false;                     //This is for helping with developing the transpiler code, to find the correct IL to modify.
 
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -46,6 +47,7 @@ namespace EpilepsyPatch
         public static string FlashlightSpamCooldownKey = "Flashlight spam cooldown";
 
         public static string DisablePlayerMonitorBlinkKey = "Disable player monitor blink";
+        public static string DisableStartRoomFanKey = "Disable the fan in the start room";
 
         //Config Entries.
         public static ConfigEntry<bool> StunGrenadeExplosionDisabled;
@@ -64,6 +66,7 @@ namespace EpilepsyPatch
         public static ConfigEntry<bool> PreventFlashlightSpam;
         public static ConfigEntry<float> FlashlightSpamCooldown;
         public static ConfigEntry<bool> DisablePlayerMonitorBlink;
+        public static ConfigEntry<bool> DisableStartRoomFan;
 
         void Awake()
         {
@@ -85,6 +88,7 @@ namespace EpilepsyPatch
             PreventFlashlightSpam = (Config.Bind<bool>("General", PreventFlashlightSpamKey, true, new ConfigDescription("Prevent the flashlight from being spammed on and off")));
             FlashlightSpamCooldown = Config.Bind("General", FlashlightSpamCooldownKey, 2.0f, new ConfigDescription("Time in seconds for network players flashlight to be on cooldown for, this is to prevent spamming. Note: this may cause the state to not be synchronised.", new AcceptableValueRange<float>(0.1f, 5.0f)));
             DisablePlayerMonitorBlink = (Config.Bind<bool>("General", DisablePlayerMonitorBlinkKey, true, new ConfigDescription("Should the screen blink when switching players on the monitor animation be removed")));
+            DisableStartRoomFan = (Config.Bind<bool>("General", DisableStartRoomFanKey, true, new ConfigDescription("Should the fan in the enterance of the facility be stopped from spinning")));
 
 
             if (Instance == null)
@@ -112,6 +116,9 @@ namespace EpilepsyPatch
             //harmony.PatchAll(typeof(FlashlightSpamPatch));        //Failed testing for preventing flashlight spam.
             harmony.PatchAll(typeof(SwitchFlashlightSpamPatch));
             harmony.PatchAll(typeof(ManualCameraRendererPatch));
+            harmony.PatchAll(typeof(Tools_ListAllGameObjects));
+            harmony.PatchAll(typeof(StopEntryRoomFan));
+            //harmony.PatchAll(typeof(HideTheSunDontPraiseIt));       //Yeah i cant get this one to work.
         }
 
 
