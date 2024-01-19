@@ -20,7 +20,7 @@ namespace EpilepsyPatch
     {
         private const string modGUID = "LongParsnip.EpilepsyPatch";
         private const string modName = "EpilepsyPatch";
-        private const string modVersion = "1.0.6.0";
+        private const string modVersion = "1.0.7.0";
         public const bool LogDebugMessages = false;                     //This is for helping with developing the transpiler code, to find the correct IL to modify.
 
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -42,6 +42,8 @@ namespace EpilepsyPatch
         public static string DisableFearScreenFilterKey = "Disable fear screen filter";
         public static string DisableBeeZapsKey = "Disable bee zaps";
         public static string DisableBeamUpParticlesKey = "Disable beam up particles";
+        public static string PreventFlashlightSpamKey = "Prevent flashlight spam";
+        public static string FlashlightSpamCooldownKey = "Flashlight spam cooldown";
 
         //Config Entries.
         public static ConfigEntry<bool> StunGrenadeExplosionDisabled;
@@ -57,6 +59,8 @@ namespace EpilepsyPatch
         public static ConfigEntry<bool> DisableFearScreenFilter;
         public static ConfigEntry<bool> DisableBeeZaps;
         public static ConfigEntry<bool> DisableBeamUpParticles;
+        public static ConfigEntry<bool> PreventFlashlightSpam;
+        public static ConfigEntry<float> FlashlightSpamCooldown;
 
         void Awake()
         {
@@ -75,6 +79,8 @@ namespace EpilepsyPatch
             DisableFearScreenFilter = (Config.Bind<bool>("General", DisableFearScreenFilterKey, false, new ConfigDescription("Should the fear effect screen filter be hidden")));
             DisableBeeZaps = (Config.Bind<bool>("General", DisableBeeZapsKey, true, new ConfigDescription("Should the bee zap effect be hidden")));
             DisableBeamUpParticles = (Config.Bind<bool>("General", DisableBeamUpParticlesKey, true, new ConfigDescription("Should the particle effect when being beamed up be hidden")));
+            PreventFlashlightSpam = (Config.Bind<bool>("General", PreventFlashlightSpamKey, true, new ConfigDescription("Prevent the flashlight from being spammed on and off")));
+            FlashlightSpamCooldown = Config.Bind("General", FlashlightSpamCooldownKey, 2.0f, new ConfigDescription("Time in seconds for network players flashlight to be on cooldown for, this is to prevent spamming. Note: this may cause the state to not be synchronised.", new AcceptableValueRange<float>(0.1f, 5.0f)));
 
 
 
@@ -95,9 +101,13 @@ namespace EpilepsyPatch
             harmony.PatchAll(typeof(PlayerControllerBPatch));
             //harmony.PatchAll(typeof(ShipTeleporterPatch));        //Example of how to use a transpiler on a coroutine.
             harmony.PatchAll(typeof(LightningPatch));
-            //harmony.PatchAll(typeof(ExplosionPatch));     //didn't work for lightning, might be useful for landmines though, needs more testing.
+            //harmony.PatchAll(typeof(ExplosionPatch));             //didn't work for lightning, might be useful for landmines though, needs more testing.
             harmony.PatchAll(typeof(insanityFilterPatch));
             harmony.PatchAll(typeof(BeeZapPatch));
+            //harmony.PatchAll(typeof(FlashlightSpamPatch));        //Failed testing for preventing flashlight spam.
+            //harmony.PatchAll(typeof(SwitchFlashlightPatch));      //Failed testing for preventing flashlight spam.
+            //harmony.PatchAll(typeof(FlashlightSpamPatch));        //Failed testing for preventing flashlight spam.
+            harmony.PatchAll(typeof(SwitchFlashlightSpamPatch));
         }
 
 

@@ -86,6 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="patches\FlashlightItemPatch.cs" />
     <Compile Include="patches\HudManagerPatch.cs" />
     <Compile Include="patches\LandminePatch.cs" />
     <Compile Include="patches\PlayerControllerBPatch.cs" />
