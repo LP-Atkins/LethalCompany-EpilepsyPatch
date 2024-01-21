@@ -11,7 +11,7 @@ using GameNetcodeStuff;
 
 namespace EpilepsyPatch.patches
 {
-    [HarmonyPatch(typeof(PlayerControllerB))]
+    [HarmonyPatch(typeof(StartOfRound))]
     internal class StopEntryRoomFan
     {
         private static bool fanStopped = false;
@@ -20,7 +20,6 @@ namespace EpilepsyPatch.patches
         [HarmonyPatch("Update")]
         static void Postfix(Tools_ListAllGameObjects __instance)
         {
-            // Check if the F10 key is pressed
             if (!fanStopped)
             {
                 DisableIndustrialFanAnimator();
@@ -50,6 +49,14 @@ namespace EpilepsyPatch.patches
             {
                 //UnityEngine.Debug.LogWarning("IndustrialFan object not found.");
             }
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch("AutoSaveShipData")]
+        private static void resetFanDisabled()
+        {
+            fanStopped = false;
+            UnityEngine.Debug.Log("Resetting fan stopped trigger.");
         }
     }
 }
