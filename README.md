@@ -23,7 +23,7 @@ Hide the spark animation when using the item charger (default: true)
   
   
 # Shoutout to anEpilepticGamer for testing and many many suggestions, the scope of this mod would not have gotten to where it is without your input.  
-## Please go and support for her and the epileptic gaming community at: https://www.twitch.tv/AnEpilepticGamer  
+## Please go and support her and the epileptic gaming community at: https://www.twitch.tv/AnEpilepticGamer  
   
   
   
