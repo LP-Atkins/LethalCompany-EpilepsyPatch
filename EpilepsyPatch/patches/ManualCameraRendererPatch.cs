@@ -22,7 +22,8 @@ namespace EpilepsyPatch.patches
 
             if (mapCameraAnimator != null && EpilepsyPatchBase.DisablePlayerMonitorBlink.Value)
             {
-                mapCameraAnimator.speed = 0;
+                //mapCameraAnimator.speed = 0;          //This left a green line on the screen of the first frame of the animation.
+                mapCameraAnimator.enabled = false;
             }
         }
     }

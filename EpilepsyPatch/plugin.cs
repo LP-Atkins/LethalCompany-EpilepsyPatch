@@ -21,7 +21,7 @@ namespace EpilepsyPatch
     {
         private const string modGUID = "LongParsnip.EpilepsyPatch";
         private const string modName = "EpilepsyPatch";
-        private const string modVersion = "1.0.11.0";
+        private const string modVersion = "1.0.12.0";
         public const bool LogDebugMessages = false;                     //This is for helping with developing the transpiler code, to find the correct IL to modify.
 
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -49,6 +49,7 @@ namespace EpilepsyPatch
         public static string DisableStartRoomFanKey = "Disable the fan in the start room";
         public static string HideTerminalCaretKey = "Hide terminal caret";
         public static string DisableChargerAnimationKey = "Disable charger animation";
+        public static string TryToHideTurretBulletsKey = "Try to hide turret bullets";
 
         //Config Entries.
         public static ConfigEntry<bool> StunGrenadeExplosionDisabled;
@@ -70,6 +71,7 @@ namespace EpilepsyPatch
         public static ConfigEntry<bool> DisableStartRoomFan;
         public static ConfigEntry<bool> HideTerminalCaret;
         public static ConfigEntry<bool> DisableChargerAnimation;
+        public static ConfigEntry<bool> TryToHideTurretBullets;
 
         void Awake()
         {
@@ -94,6 +96,7 @@ namespace EpilepsyPatch
             DisableStartRoomFan = (Config.Bind<bool>("General", DisableStartRoomFanKey, true, new ConfigDescription("Should the fan in the enterance of the facility be stopped from spinning")));
             HideTerminalCaret = (Config.Bind<bool>("General", HideTerminalCaretKey, true, new ConfigDescription("Should the blinking caret on the terminal be hidden")));
             DisableChargerAnimation = (Config.Bind<bool>("General", DisableChargerAnimationKey, true, new ConfigDescription("Should the Charger sparks animation be hidden")));
+            TryToHideTurretBullets = (Config.Bind<bool>("General", TryToHideTurretBulletsKey, true, new ConfigDescription("Attemps to hide the bullets from the turret, hit detection may be affected")));
 
 
             if (Instance == null)
@@ -126,6 +129,7 @@ namespace EpilepsyPatch
             //harmony.PatchAll(typeof(HideTheSunDontPraiseIt));       //Yeah i cant get this one to work.
             harmony.PatchAll(typeof(TerminalPatch));
             harmony.PatchAll(typeof(ItemChargerPatch));
+            harmony.PatchAll(typeof(StopTurretAnimator));
         }
 
 

@@ -58,5 +58,16 @@ namespace EpilepsyPatch.patches
             fanStopped = false;
             UnityEngine.Debug.Log("Resetting fan stopped trigger.");
         }
+
+
+        [HarmonyPatch(typeof(RoundManager))]
+        [HarmonyPrefix]
+        [HarmonyPatch("LoadNewLevel")]
+        private static void resetFanDisabled2()
+        {
+            fanStopped = false;
+            UnityEngine.Debug.Log("Resetting fan stopped trigger.");
+        }
+
     }
 }
