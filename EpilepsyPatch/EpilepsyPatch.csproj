@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="patches\FlashlightItemPatch.cs" />
     <Compile Include="patches\HudManagerPatch.cs" />
+    <Compile Include="patches\ItemChargerPatch.cs" />
     <Compile Include="patches\LandminePatch.cs" />
     <Compile Include="patches\ManualCameraRendererPatch.cs" />
     <Compile Include="patches\OutsidePatches.cs" />

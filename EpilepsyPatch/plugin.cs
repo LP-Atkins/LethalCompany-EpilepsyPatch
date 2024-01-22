@@ -21,7 +21,7 @@ namespace EpilepsyPatch
     {
         private const string modGUID = "LongParsnip.EpilepsyPatch";
         private const string modName = "EpilepsyPatch";
-        private const string modVersion = "1.0.9.0";
+        private const string modVersion = "1.0.10.0";
         public const bool LogDebugMessages = false;                     //This is for helping with developing the transpiler code, to find the correct IL to modify.
 
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -48,6 +48,7 @@ namespace EpilepsyPatch
         public static string DisablePlayerMonitorBlinkKey = "Disable player monitor blink";
         public static string DisableStartRoomFanKey = "Disable the fan in the start room";
         public static string HideTerminalCaretKey = "Hide terminal caret";
+        public static string DisableChargerAnimationKey = "Disable charger animation";
 
         //Config Entries.
         public static ConfigEntry<bool> StunGrenadeExplosionDisabled;
@@ -68,6 +69,7 @@ namespace EpilepsyPatch
         public static ConfigEntry<bool> DisablePlayerMonitorBlink;
         public static ConfigEntry<bool> DisableStartRoomFan;
         public static ConfigEntry<bool> HideTerminalCaret;
+        public static ConfigEntry<bool> DisableChargerAnimation;
 
         void Awake()
         {
@@ -91,6 +93,7 @@ namespace EpilepsyPatch
             DisablePlayerMonitorBlink = (Config.Bind<bool>("General", DisablePlayerMonitorBlinkKey, true, new ConfigDescription("Should the screen blink when switching players on the monitor animation be removed")));
             DisableStartRoomFan = (Config.Bind<bool>("General", DisableStartRoomFanKey, true, new ConfigDescription("Should the fan in the enterance of the facility be stopped from spinning")));
             HideTerminalCaret = (Config.Bind<bool>("General", HideTerminalCaretKey, true, new ConfigDescription("Should the blinking caret on the terminal be hidden")));
+            DisableChargerAnimation = (Config.Bind<bool>("General", DisableChargerAnimationKey, true, new ConfigDescription("Should the Charger sparks animation be hidden")));
 
 
             if (Instance == null)
@@ -122,6 +125,7 @@ namespace EpilepsyPatch
             harmony.PatchAll(typeof(StopEntryRoomFan));
             //harmony.PatchAll(typeof(HideTheSunDontPraiseIt));       //Yeah i cant get this one to work.
             harmony.PatchAll(typeof(TerminalPatch));
+            harmony.PatchAll(typeof(ItemChargerPatch));
         }
 
 
