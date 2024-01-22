@@ -17,7 +17,7 @@ Network player flashlight use cooldown (default: 2s) -This goes with the above s
 Disable player monitor blink when changing target (default: true)  
 Disable start room fan spinning animation in the facility (default: true)  
   
-New in v1.0.9 & v1.0.10  
+New in v1.0.9 & v1.0.11  
 Hide the blinking caret on the terminal screen (default: true)  
 Hide the spark animation when using the item charger (default: true)  
   
