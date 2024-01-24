@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using EpilepsyPatch.tools;
+using static EpilepsyPatch.patches.RadarBoosterPatch;
 
 namespace EpilepsyPatch
 {
@@ -21,7 +22,7 @@ namespace EpilepsyPatch
     {
         private const string modGUID = "LongParsnip.EpilepsyPatch";
         private const string modName = "EpilepsyPatch";
-        private const string modVersion = "1.0.12.0";
+        private const string modVersion = "1.0.13.0";
         public const bool LogDebugMessages = false;                     //This is for helping with developing the transpiler code, to find the correct IL to modify.
 
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -50,6 +51,9 @@ namespace EpilepsyPatch
         public static string HideTerminalCaretKey = "Hide terminal caret";
         public static string DisableChargerAnimationKey = "Disable charger animation";
         public static string TryToHideTurretBulletsKey = "Try to hide turret bullets";
+        public static string DisableRadarBoosterAnimationKey = "Disable radar booster animation";
+        public static string DisableRadarBoosterFlashKey = "Disable radar booster flash";
+        public static string DisableLandminesKey = "Disable landmines";
 
         //Config Entries.
         public static ConfigEntry<bool> StunGrenadeExplosionDisabled;
@@ -72,13 +76,16 @@ namespace EpilepsyPatch
         public static ConfigEntry<bool> HideTerminalCaret;
         public static ConfigEntry<bool> DisableChargerAnimation;
         public static ConfigEntry<bool> TryToHideTurretBullets;
+        public static ConfigEntry<bool> DisableRadarBoosterAnimation;
+        public static ConfigEntry<bool> DisableRadarBoosterFlash;
+        public static ConfigEntry<bool> DisableLandmines;
 
         void Awake()
         {
 
             //Config bindings.
             StunGrenadeExplosionDisabled = (Config.Bind<bool>("General", StunGrenadeExplosionDisabledKey, true, new ConfigDescription("Should the stun grenade explosion animation be disabled.")));
-            StunGrenadeFilterDisabled = (Config.Bind<bool>("General", StunGrenadeFilterDisabledKey, false, new ConfigDescription("Should the stun grenade stunned filter be disabled.")));
+            StunGrenadeFilterDisabled = (Config.Bind<bool>("General", StunGrenadeFilterDisabledKey, true, new ConfigDescription("Should the stun grenade stunned filter be disabled.")));
             ScanBlueFlashDisabled = (Config.Bind<bool>("General", ScanBlueFlashDisabledKey, true, new ConfigDescription("Should the blue flash when scanning be disabled.")));
             GettingFiredLightDisabled = (Config.Bind<bool>("General", GettingFiredLightDisabledKey, true, new ConfigDescription("Should the red light when getting fired be disabled")));
             DisableGlobalNotifications = (Config.Bind<bool>("General", DisableGlobalNotificationsKey, false, new ConfigDescription("Should global notifications be disabled")));
@@ -97,6 +104,9 @@ namespace EpilepsyPatch
             HideTerminalCaret = (Config.Bind<bool>("General", HideTerminalCaretKey, true, new ConfigDescription("Should the blinking caret on the terminal be hidden")));
             DisableChargerAnimation = (Config.Bind<bool>("General", DisableChargerAnimationKey, true, new ConfigDescription("Should the Charger sparks animation be hidden")));
             TryToHideTurretBullets = (Config.Bind<bool>("General", TryToHideTurretBulletsKey, true, new ConfigDescription("Attemps to hide the bullets from the turret, hit detection may be affected")));
+            DisableRadarBoosterAnimation = (Config.Bind<bool>("General", DisableRadarBoosterAnimationKey, true, new ConfigDescription("Should the spinning animation on the radar booster be hidden")));
+            DisableRadarBoosterFlash = (Config.Bind<bool>("General", DisableRadarBoosterFlashKey, true, new ConfigDescription("Prevents the radar booster from flashing, unfortunately this means it wont work... sorry.")));
+            DisableLandmines = (Config.Bind<bool>("General", DisableLandminesKey, false, new ConfigDescription("Stops landmines exploding... also means they wont kill you.")));
 
 
             if (Instance == null)
@@ -130,6 +140,10 @@ namespace EpilepsyPatch
             harmony.PatchAll(typeof(TerminalPatch));
             harmony.PatchAll(typeof(ItemChargerPatch));
             harmony.PatchAll(typeof(StopTurretAnimator));
+            harmony.PatchAll(typeof(StopLandmine));               //Not working 100%, just stops it from exploding.
+            harmony.PatchAll(typeof(RadarBoosterPatch));
+            harmony.PatchAll(typeof(RadarBoosterPatch2));           //This stops the flash from working.... not ideal.
+
         }
 
 

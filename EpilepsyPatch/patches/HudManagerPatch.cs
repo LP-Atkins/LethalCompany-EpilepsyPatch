@@ -154,13 +154,23 @@ namespace EpilepsyPatch.patches
     {
         [HarmonyPatch("Update")]
         [HarmonyPrefix]
-        static void shipLightsPatch(ref Volume ___insanityScreenFilter)
+        //static void shipLightsPatch(ref Volume ___insanityScreenFilter, ref Volume ___flashbangScreenFilter)
+        static void shipLightsPatch(HUDManager __instance)
         {
             if (EpilepsyPatchBase.DisableFearScreenFilter.Value)
             {
-                ___insanityScreenFilter.weight = 0f;
+                //___insanityScreenFilter.weight = 0f;
+                __instance.insanityScreenFilter.weight = 0f;
 
             }
+
+            //if (EpilepsyPatchBase.DisableRadarBoosterAnimation.Value)     //for some unknown reason, doesn't not work with the radar booster.
+            //{
+                //___flashbangScreenFilter.weight = 0f;
+            //    __instance.flashbangScreenFilter.weight = 0f;
+            //    __instance.flashFilter = 0;
+            //    UnityEngine.Debug.Log("Filter set to 0");
+            //}
         }
 
     }

@@ -24,14 +24,7 @@ namespace EpilepsyPatch.patches
             {
                 CodeInstruction instruction = instructionList[i];
 
-
-                //Debugging messages, set by constant in 'plugin.cs'
-                if (EpilepsyPatchBase.LogDebugMessages)
-                {
-                    EpilepsyPatchBase.LogDebuggingMessages(instruction, i);
-                }
-
-
+                //EpilepsyPatchBase.LogDebuggingMessages(instruction, i);
 
                 //Replace the screen filter with NOP.
                 if (EpilepsyPatchBase.StunGrenadeFilterDisabled.Value)

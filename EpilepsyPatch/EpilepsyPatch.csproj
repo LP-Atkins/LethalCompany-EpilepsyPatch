@@ -84,6 +84,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company(SDK)\Lethal Company_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company(SDK)\Lethal Company_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
@@ -102,6 +103,7 @@
     <Compile Include="patches\ManualCameraRendererPatch.cs" />
     <Compile Include="patches\OutsidePatches.cs" />
     <Compile Include="patches\PlayerControllerBPatch.cs" />
+    <Compile Include="patches\RadarBoosterItemPatch.cs" />
     <Compile Include="patches\RedLocustBeesPatch.cs" />
     <Compile Include="patches\ShipTeleporterPatch.cs" />
     <Compile Include="patches\StartRoomPatch.cs" />
