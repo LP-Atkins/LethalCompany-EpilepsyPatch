@@ -22,7 +22,7 @@ namespace EpilepsyPatch
     {
         private const string modGUID = "LongParsnip.EpilepsyPatch";
         private const string modName = "EpilepsyPatch";
-        private const string modVersion = "1.0.13.0";
+        private const string modVersion = "1.0.14.0";
         public const bool LogDebugMessages = false;                     //This is for helping with developing the transpiler code, to find the correct IL to modify.
 
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -54,6 +54,8 @@ namespace EpilepsyPatch
         public static string DisableRadarBoosterAnimationKey = "Disable radar booster animation";
         public static string DisableRadarBoosterFlashKey = "Disable radar booster flash";
         public static string DisableLandminesKey = "Disable landmines";
+        public static string DisableFogKey = "Disable fog";
+        public static string DisableFPVHelmetKey = "Disable FPV helmet";
 
         //Config Entries.
         public static ConfigEntry<bool> StunGrenadeExplosionDisabled;
@@ -79,6 +81,8 @@ namespace EpilepsyPatch
         public static ConfigEntry<bool> DisableRadarBoosterAnimation;
         public static ConfigEntry<bool> DisableRadarBoosterFlash;
         public static ConfigEntry<bool> DisableLandmines;
+        public static ConfigEntry<bool> DisableFog;
+        public static ConfigEntry<bool> DisableFPVHelmet;
 
         void Awake()
         {
@@ -107,6 +111,8 @@ namespace EpilepsyPatch
             DisableRadarBoosterAnimation = (Config.Bind<bool>("General", DisableRadarBoosterAnimationKey, true, new ConfigDescription("Should the spinning animation on the radar booster be hidden")));
             DisableRadarBoosterFlash = (Config.Bind<bool>("General", DisableRadarBoosterFlashKey, true, new ConfigDescription("Prevents the radar booster from flashing, unfortunately this means it wont work... sorry.")));
             DisableLandmines = (Config.Bind<bool>("General", DisableLandminesKey, false, new ConfigDescription("Stops landmines exploding... also means they wont kill you.")));
+            DisableFog = (Config.Bind<bool>("General", DisableFogKey, true, new ConfigDescription("Disables the volumetric fog in the rendering gameobject.")));
+            DisableFPVHelmet = (Config.Bind<bool>("General", DisableFPVHelmetKey, true, new ConfigDescription("Disables the first person helmet 3D model, in the rendering gamebobject, because light can reflect off the glass and flash.")));
 
 
             if (Instance == null)

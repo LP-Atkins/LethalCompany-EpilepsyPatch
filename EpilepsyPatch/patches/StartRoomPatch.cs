@@ -24,6 +24,9 @@ namespace EpilepsyPatch.patches
             {
                 DisableIndustrialFanAnimator();
             }
+
+            RemoveHelmet();
+            RemoveFog();
         }
 
         private static void DisableIndustrialFanAnimator()
@@ -49,6 +52,35 @@ namespace EpilepsyPatch.patches
             {
                 //UnityEngine.Debug.LogWarning("IndustrialFan object not found.");
             }
+        }
+
+        private static void RemoveHelmet()
+        {
+            //PlayerHUDHelmetMode.ScavengerHelmet.Plane
+            if (EpilepsyPatchBase.DisableFPVHelmet.Value)
+            {
+                GameObject PlayerHUDHelmetModel = GameObject.Find("ScavengerHelmet");
+
+                if (PlayerHUDHelmetModel != null)
+                {
+                    PlayerHUDHelmetModel.SetActive(false);
+                }
+            }
+        }
+
+        private static void RemoveFog()
+        {
+            if (EpilepsyPatchBase.DisableFog.Value)
+            {
+                GameObject VolumeMain = GameObject.Find("VolumeMain");
+
+                if (VolumeMain != null)
+                {
+                    VolumeMain.SetActive(false);
+                }
+            }
+
+            
         }
 
         [HarmonyPrefix]
