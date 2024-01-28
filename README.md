@@ -19,14 +19,18 @@ Disable start room fan spinning animation in the facility (default: true)
 Hide the blinking caret on the terminal screen (default: true)  
 Hide the spark animation when using the item charger (default: true)  
 Hide the turret bullet projectiles. Note doesn't hide the muzzle flash. (default: true)  
-  
-  
-New in v1.0.13  & v1.0.14  
 Disable the radar booster spinning animation (default: true)  
 Disable the radar booster flash, which also stops it working... sorry (default: true)  
 Disable landmines, they no longer explode because I couldn't remove the explosion any other way (default: false)  
 Disable the FPV helmet as the crack can cause light reflections (default: true)  
-Disable volumetric fog (default: true)  
+Disable all fog (default: true)  
+  
+  
+New in v1.0.15  
+Disable volumetric fog only (default: true) *NOTE* in order for this to work you need to set Disable all fog to {false}  
+Disable FPV helmet glass only (default: true) *NOTE* in order for this to work you need to set Disable FPV helemt to {false}   
+Disable Critical health message which is also the same effect as when taking damage (default: true)  
+  
   
   
 # Shoutout to anEpilepticGamer for testing and many many suggestions, the scope of this mod would not have gotten to where it is without your input.  
