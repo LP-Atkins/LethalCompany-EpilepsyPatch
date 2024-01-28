@@ -33,6 +33,7 @@ namespace EpilepsyPatch.tools
             if (Keyboard.current != null && Keyboard.current.f11Key.wasPressedThisFrame && !hasTriggered2)
             {
                 //ListRenderingGameObjects(__instance);
+                LogGOinformation(__instance, "VolumeMain");
                 hasTriggered2 = true;
             }
         }
@@ -52,7 +53,7 @@ namespace EpilepsyPatch.tools
 
         //List of Child GameObjects under 'Rendering':
             //VolumeMain                : Volumetric fog
-            //CustomPass                : No idea   
+            //CustomPass                : Apparently this is Zeekers custom shader and edge detection.   
             //PlayerHUDHelmetModel      : Facemask 3D model for FPV
             //ScanSphere                : No idea
             //InsanityFilter            : Fear effect filter
@@ -80,6 +81,42 @@ namespace EpilepsyPatch.tools
                 Debug.LogError("No 'Rendering' GameObject found in the scene");
             }
         }
+
+
+
+        private static void LogGOinformation(Tools_ListAllGameObjects toolsInstance, string gObject)
+        {
+            GameObject volumeMainGameObject = GameObject.Find(gObject);
+
+            if (volumeMainGameObject != null)
+            {
+                Component[] components = volumeMainGameObject.GetComponents<Component>();
+
+                foreach (Component component in components)
+                {
+                    Debug.Log($"Parameters of {component.GetType().Name} on {gObject} GameObject:");
+
+                    System.Type type = component.GetType();
+                    System.Reflection.FieldInfo[] fields = type.GetFields();
+                    System.Reflection.PropertyInfo[] properties = type.GetProperties();
+
+                    foreach (var field in fields)
+                    {
+                        Debug.Log($"{field.Name}: {field.GetValue(component)}");
+                    }
+
+                    foreach (var property in properties)
+                    {
+                        Debug.Log($"{property.Name}: {property.GetValue(component)}");
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError($"No {gObject} GameObject found in the scene");
+            }
+        }
+
 
 
 

@@ -55,7 +55,10 @@ namespace EpilepsyPatch
         public static string DisableRadarBoosterFlashKey = "Disable radar booster flash";
         public static string DisableLandminesKey = "Disable landmines";
         public static string DisableFogKey = "Disable fog";
+        public static string DisableVolumetricFogKey = "Disable volumetric fog";
         public static string DisableFPVHelmetKey = "Disable FPV helmet";
+        public static string DisableFPVHelmetGlassKey = "Disable helmet glass";
+        public static string DisableCriticalHealthMessageKey = "Disable critical health message";
 
         //Config Entries.
         public static ConfigEntry<bool> StunGrenadeExplosionDisabled;
@@ -83,6 +86,10 @@ namespace EpilepsyPatch
         public static ConfigEntry<bool> DisableLandmines;
         public static ConfigEntry<bool> DisableFog;
         public static ConfigEntry<bool> DisableFPVHelmet;
+        public static ConfigEntry<bool> DisableFPVHelmetGlass;
+        public static ConfigEntry<bool> DisableVolumetricFog;
+        public static ConfigEntry<bool> DisableCriticalHealthMessage;
+
 
         void Awake()
         {
@@ -111,8 +118,11 @@ namespace EpilepsyPatch
             DisableRadarBoosterAnimation = (Config.Bind<bool>("General", DisableRadarBoosterAnimationKey, true, new ConfigDescription("Should the spinning animation on the radar booster be hidden")));
             DisableRadarBoosterFlash = (Config.Bind<bool>("General", DisableRadarBoosterFlashKey, true, new ConfigDescription("Prevents the radar booster from flashing, unfortunately this means it wont work... sorry.")));
             DisableLandmines = (Config.Bind<bool>("General", DisableLandminesKey, false, new ConfigDescription("Stops landmines exploding... also means they wont kill you.")));
-            DisableFog = (Config.Bind<bool>("General", DisableFogKey, true, new ConfigDescription("Disables the volumetric fog in the rendering gameobject.")));
+            DisableFog = (Config.Bind<bool>("General", DisableFogKey, true, new ConfigDescription("Disables all fog in the rendering gameobject.")));
+            DisableVolumetricFog = (Config.Bind<bool>("General", DisableVolumetricFogKey, true, new ConfigDescription("Disables volumetric fog (3D fog) only")));
             DisableFPVHelmet = (Config.Bind<bool>("General", DisableFPVHelmetKey, true, new ConfigDescription("Disables the first person helmet 3D model, in the rendering gamebobject, because light can reflect off the glass and flash.")));
+            DisableFPVHelmetGlass = (Config.Bind<bool>("General", DisableFPVHelmetGlassKey, true, new ConfigDescription("Disables only the glass on the FPV helmet")));
+            DisableCriticalHealthMessage = (Config.Bind<bool>("General", DisableCriticalHealthMessageKey, true, new ConfigDescription("Disables the warning message when health is critical")));
 
 
             if (Instance == null)
