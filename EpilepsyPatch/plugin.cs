@@ -22,7 +22,7 @@ namespace EpilepsyPatch
     {
         private const string modGUID = "LongParsnip.EpilepsyPatch";
         private const string modName = "EpilepsyPatch";
-        private const string modVersion = "1.0.14.0";
+        private const string modVersion = "1.0.16.0";
         public const bool LogDebugMessages = false;                     //This is for helping with developing the transpiler code, to find the correct IL to modify.
 
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -56,6 +56,7 @@ namespace EpilepsyPatch
         public static string DisableLandminesKey = "Disable landmines";
         public static string DisableFogKey = "Disable fog";
         public static string DisableVolumetricFogKey = "Disable volumetric fog";
+        public static string DisableFogMovementKey = "Disable Fog Movement";
         public static string DisableFPVHelmetKey = "Disable FPV helmet";
         public static string DisableFPVHelmetGlassKey = "Disable helmet glass";
         public static string DisableCriticalHealthMessageKey = "Disable critical health message";
@@ -89,6 +90,7 @@ namespace EpilepsyPatch
         public static ConfigEntry<bool> DisableFPVHelmetGlass;
         public static ConfigEntry<bool> DisableVolumetricFog;
         public static ConfigEntry<bool> DisableCriticalHealthMessage;
+        public static ConfigEntry<bool> DisableFogMovement;
 
 
         void Awake()
@@ -120,6 +122,7 @@ namespace EpilepsyPatch
             DisableLandmines = (Config.Bind<bool>("General", DisableLandminesKey, false, new ConfigDescription("Stops landmines exploding... also means they wont kill you.")));
             DisableFog = (Config.Bind<bool>("General", DisableFogKey, true, new ConfigDescription("Disables all fog in the rendering gameobject.")));
             DisableVolumetricFog = (Config.Bind<bool>("General", DisableVolumetricFogKey, true, new ConfigDescription("Disables volumetric fog (3D fog) only")));
+            DisableFogMovement = (Config.Bind<bool>("General", DisableFogMovementKey, true, new ConfigDescription("Stops the movement of the outdoors volumetric fog which can cause strobing near light sources. Note for this to work the other fog settings need to be set to false")));
             DisableFPVHelmet = (Config.Bind<bool>("General", DisableFPVHelmetKey, true, new ConfigDescription("Disables the first person helmet 3D model, in the rendering gamebobject, because light can reflect off the glass and flash.")));
             DisableFPVHelmetGlass = (Config.Bind<bool>("General", DisableFPVHelmetGlassKey, true, new ConfigDescription("Disables only the glass on the FPV helmet")));
             DisableCriticalHealthMessage = (Config.Bind<bool>("General", DisableCriticalHealthMessageKey, true, new ConfigDescription("Disables the warning message when health is critical")));

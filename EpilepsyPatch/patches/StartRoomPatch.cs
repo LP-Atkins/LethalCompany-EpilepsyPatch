@@ -148,6 +148,22 @@ namespace EpilepsyPatch.patches
             }
         }
 
+        //Finds a specified VolumeProfile
+        private static VolumeProfile FindVolumeProfile(string profileName)
+        {
+            VolumeProfile[] allVolumeProfiles = UnityEngine.Object.FindObjectsOfType<VolumeProfile>();
+            foreach (VolumeProfile volumeProfile in allVolumeProfiles)
+            {
+                if (volumeProfile.name == profileName)
+                {
+                    return volumeProfile;
+                }
+            }
+
+            return null;
+        }
+
+
 
         [HarmonyPrefix]
         [HarmonyPatch("AutoSaveShipData")]

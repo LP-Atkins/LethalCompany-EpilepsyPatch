@@ -9,6 +9,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 
 namespace EpilepsyPatch.patches
 {
@@ -39,6 +40,79 @@ namespace EpilepsyPatch.patches
                 __instance.beamUpParticle.Stop();
                 __instance.beamOutParticle.Stop();
                 __instance.beamOutBuildupParticle.Stop();
+            }
+        }
+
+        [HarmonyPatch("Update")]
+        [HarmonyPrefix]
+        static void MakeFogStill()
+        {
+            if (EpilepsyPatchBase.DisableFogMovement.Value)
+            {
+                GameObject brightDay = GameObject.Find("BrightDay");
+
+                if (brightDay != null)
+                {
+                    // Get the LocalVolumetricFog component in the children of the "BrightDay" GameObject
+                    LocalVolumetricFog localVolumetricFog = brightDay.GetComponentInChildren<LocalVolumetricFog>();
+
+                    // Check if the direct reference didn't work, try with the name
+                    if (localVolumetricFog == null)
+                    {
+                        localVolumetricFog = brightDay.GetComponentInChildren<LocalVolumetricFog>(true);
+                    }
+
+                    if (localVolumetricFog != null)
+                    {
+                        // Access the LocalVolumetricFogArtistParameters directly and set the textureScrollingSpeed
+                        localVolumetricFog.parameters.textureScrollingSpeed = Vector3.zero;
+
+                        //Debug.Log("Set LocalVolumetricFogArtistParameters.textureScrollingSpeed to (0, 0, 0)");
+                    }
+                    else
+                    {
+                        //Debug.LogError("LocalVolumetricFog component not found on BrightDay GameObject or its children");
+                    }
+                }
+                else
+                {
+                    //Debug.LogError("BrightDay GameObject not found");
+                }
+            }
+        }
+
+        [HarmonyPatch("Update")]
+        [HarmonyPrefix]
+        static void DustStorm()
+        {
+            if (EpilepsyPatchBase.DisableFogMovement.Value)
+            {
+                GameObject TimeAndWeather = GameObject.Find("TimeAndWeather");
+                if (TimeAndWeather != null)
+                {
+                    GameObject DustStorm = TimeAndWeather.transform.Find("DustStorm")?.gameObject;
+                    if (DustStorm != null)
+                    {
+                        LocalVolumetricFog dustVolumetricFog = DustStorm.GetComponent<LocalVolumetricFog>();
+                        if (dustVolumetricFog != null)
+                        {
+                            dustVolumetricFog.enabled = false;
+                            //UnityEngine.Debug.Log("Disabling the dust storm");
+                        }
+                        else
+                        {
+                            //UnityEngine.Debug.Log("unable to locate the dust volume");
+                        }
+                    }
+                    else
+                    {
+                        //UnityEngine.Debug.Log("Unable to locate DustStorm");
+                    }
+                }
+                else
+                {
+                    //UnityEngine.Debug.Log("Unable to locate TimeAndWeather");
+                }
             }
         }
     }
