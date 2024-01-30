@@ -32,6 +32,8 @@ namespace EpilepsyPatch.patches
             RemoveHelmet2();
 
             RemoveFog();
+            RemoveCustomPass();
+            RemoveMiscReflections();
             RemoveCriticalHealthWarning();
         }
 
@@ -144,6 +146,34 @@ namespace EpilepsyPatch.patches
                     volumeComponent.sharedProfile.TryGet<Fog>(out fog);
 
                     fog.enableVolumetricFog.value = false;
+                }
+            }
+        }
+
+        private static void RemoveCustomPass()
+        {
+            GameObject CustomPass = GameObject.Find("CustomPass");
+
+            if (CustomPass != null)
+            {
+                //Disable all fog.
+                if (EpilepsyPatchBase.DisableCustomShader.Value)
+                {
+                    CustomPass.SetActive(false);
+                }
+            }
+        }
+
+        private static void RemoveMiscReflections()
+        {
+            GameObject Puddles = GameObject.Find("Puddles");
+
+            if (Puddles != null)
+            {
+                //Disable all fog.
+                if (EpilepsyPatchBase.DisableMiscReflections.Value)
+                {
+                    Puddles.SetActive(false);
                 }
             }
         }
