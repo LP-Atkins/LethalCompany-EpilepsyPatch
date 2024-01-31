@@ -11,6 +11,7 @@ using UnityEngine;
 using System.Runtime.Remoting;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
+using System.Collections;
 
 namespace EpilepsyPatch.patches
 {
@@ -163,16 +164,38 @@ namespace EpilepsyPatch.patches
                 __instance.insanityScreenFilter.weight = 0f;
 
             }
-
-            //if (EpilepsyPatchBase.DisableRadarBoosterAnimation.Value)     //for some unknown reason, doesn't not work with the radar booster.
-            //{
-                //___flashbangScreenFilter.weight = 0f;
-            //    __instance.flashbangScreenFilter.weight = 0f;
-            //    __instance.flashFilter = 0;
-            //    UnityEngine.Debug.Log("Filter set to 0");
-            //}
         }
 
+    }
+
+
+    [HarmonyPatch(typeof(HUDManager))]
+    internal class ToolTipFlashPatch
+    {
+        [HarmonyPatch("DisplayTip")]
+        [HarmonyPostfix]
+        static void PostFix()
+        {
+            //Yeah this is a stupid way to do it, but you explain to me how to edit an animator and I will update it to suit.
+            if (EpilepsyPatchBase.TryToStopTooltipFlash.Value)
+            {
+                HUDManager.Instance.tipsPanelAnimator.speed = 0.1f;
+                HUDManager.Instance.StartCoroutine(PauseAnimation());
+                HUDManager.Instance.StartCoroutine(FastForwardAnimation());
+            }
+        }
+
+        private static IEnumerator PauseAnimation()
+        {
+            yield return new WaitForSeconds(0.9f);
+            HUDManager.Instance.tipsPanelAnimator.speed = 0;
+        }
+
+        private static IEnumerator FastForwardAnimation()
+        {
+            yield return new WaitForSeconds(6f);
+            HUDManager.Instance.tipsPanelAnimator.speed = 10000;
+        }
     }
 
 }

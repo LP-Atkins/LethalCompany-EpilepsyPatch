@@ -22,7 +22,7 @@ namespace EpilepsyPatch
     {
         private const string modGUID = "LongParsnip.EpilepsyPatch";
         private const string modName = "EpilepsyPatch";
-        private const string modVersion = "1.0.17.0";
+        private const string modVersion = "1.0.18.0";
         public const bool LogDebugMessages = false;                     //This is for helping with developing the transpiler code, to find the correct IL to modify.
 
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -62,6 +62,7 @@ namespace EpilepsyPatch
         public static string DisableCriticalHealthMessageKey = "Disable critical health message";
         public static string DisableCustomShaderKey = "Disable custom pass shader";
         public static string DisableMiscReflectionsKey = "Disable misc reflections";
+        public static string TryToStopTooltipFlashKey = "Try to stop tooltips flashing";
 
         //Config Entries.
         public static ConfigEntry<bool> StunGrenadeExplosionDisabled;
@@ -95,6 +96,7 @@ namespace EpilepsyPatch
         public static ConfigEntry<bool> DisableFogMovement;
         public static ConfigEntry<bool> DisableCustomShader;
         public static ConfigEntry<bool> DisableMiscReflections;
+        public static ConfigEntry<bool> TryToStopTooltipFlash;
 
 
         void Awake()
@@ -132,6 +134,7 @@ namespace EpilepsyPatch
             DisableCriticalHealthMessage = (Config.Bind<bool>("General", DisableCriticalHealthMessageKey, true, new ConfigDescription("Disables the warning message when health is critical")));
             DisableCustomShader = (Config.Bind<bool>("Rendering", DisableCustomShaderKey, true, new ConfigDescription("Disables the custom shader that does the outlining and produces the harsh colour gradients")));
             DisableMiscReflections = (Config.Bind<bool>("Rendering", DisableMiscReflectionsKey, true, new ConfigDescription("Disables misc reflections that can cause flickering")));
+            TryToStopTooltipFlash = (Config.Bind<bool>("Rendering", TryToStopTooltipFlashKey, true, new ConfigDescription("Attempts to prevent the animator from making the tooltip messages from flashing")));
 
 
             if (Instance == null)
@@ -168,6 +171,7 @@ namespace EpilepsyPatch
             harmony.PatchAll(typeof(StopLandmine));               //Not working 100%, just stops it from exploding.
             harmony.PatchAll(typeof(RadarBoosterPatch));
             harmony.PatchAll(typeof(RadarBoosterPatch2));           //This stops the flash from working.... not ideal.
+            harmony.PatchAll(typeof(ToolTipFlashPatch));
 
         }
 
