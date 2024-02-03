@@ -35,6 +35,7 @@ namespace EpilepsyPatch.patches
             RemoveCustomPass();
             RemoveMiscReflections();
             RemoveCriticalHealthWarning();
+            RemoveDrunkFilter();
         }
 
         private static void DisableIndustrialFanAnimator()
@@ -146,6 +147,21 @@ namespace EpilepsyPatch.patches
                     volumeComponent.sharedProfile.TryGet<Fog>(out fog);
 
                     fog.enableVolumetricFog.value = false;
+                }
+            }
+        }
+
+        private static void RemoveDrunkFilter()
+        {
+            GameObject DrunkFilter = GameObject.Find("DrunknessFilter");
+
+            if (DrunkFilter != null)
+            {
+                if (EpilepsyPatchBase.DisableTZPinhalentFilter.Value)
+                {
+                    DrunkFilter.SetActive(false);
+                    HUDManager.Instance.gasHelmetAnimator.enabled = false;
+                    HUDManager.Instance.gasHelmetAnimator.SetBool("gasEmitting", value: false);
                 }
             }
         }

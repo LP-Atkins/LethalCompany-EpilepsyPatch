@@ -115,6 +115,27 @@ namespace EpilepsyPatch.patches
                 }
             }
         }
+
+        [HarmonyPatch("Update")]
+        [HarmonyPrefix]
+        static void DisableFoggy()
+        {
+            if (EpilepsyPatchBase.DisableFoggyModifier.Value)
+            {
+                GameObject TimeAndWeather = GameObject.Find("TimeAndWeather");
+                if (TimeAndWeather != null)
+                {
+                    GameObject Foggy = TimeAndWeather.transform.Find("Foggy")?.gameObject;
+                    if (Foggy != null)
+                    {
+                        Foggy.SetActive(false);
+                    }
+                }
+            }
+        }
+
+
+
     }
 
 
