@@ -22,7 +22,7 @@ namespace EpilepsyPatch.patches
                 CodeInstruction instruction = instructionList[i];
                 //EpilepsyPatchBase.LogDebuggingMessages(instruction, i);
 
-                if (EpilepsyPatchBase.DisableChargerAnimation.Value)
+                if (EpilepsyPatchBase.DisableRadarBoosterAnimation.Value)
                 {
                     if (instructionList[i].opcode == OpCodes.Ldstr && (string)instructionList[i].operand == "on")
                     {
