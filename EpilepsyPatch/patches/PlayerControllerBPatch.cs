@@ -135,6 +135,37 @@ namespace EpilepsyPatch.patches
         }
 
 
+        [HarmonyPatch("Update")]
+        [HarmonyPrefix]
+        static void KillInsanityFilter()
+        {
+            if (EpilepsyPatchBase.DisableFearScreenFilter.Value)
+            {
+                GameObject InsanityFilter = GameObject.Find("InsanityFilter");
+                if ( InsanityFilter != null )
+                {
+                    InsanityFilter.SetActive(false);
+                }
+            }
+
+        }
+
+        [HarmonyPatch("Update")]
+        [HarmonyPrefix]
+        static void KillFlashFilter()
+        {
+            if (EpilepsyPatchBase.StunGrenadeFilterDisabled.Value)
+            {
+                GameObject FlashbangFilter = GameObject.Find("FlashbangFilter");
+                if (FlashbangFilter != null)
+                {
+                    FlashbangFilter.SetActive(false);
+                }
+            }
+
+        }
+
+
 
     }
 
